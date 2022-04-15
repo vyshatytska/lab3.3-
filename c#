@@ -1,0 +1,134 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lab3._3
+{
+    class Program
+    {
+        /*
+         1. Обчислити кількість кожної з оцінок «5», «4», «3» з математики.
+         2. Вивести прізвища студентів, які отримали і з фізики і з математики оцінку «5».
+        */
+        enum Specialty { KN, IT, ME, FI, TTI };
+        static string[] SpecialtyStr = { "Комп’ютерні науки", "Інформатика", "Математика та економіка", "Фізика та інформатика", "Трудове навчання" };
+
+        struct Student
+        {
+            public string prizv;
+            public int kurs;
+            public Specialty specialty;
+            public int Phisic;
+            public int Math;
+        }
+        static void Create(Student[] p)
+        {
+            int specialty;
+
+            for (int i = 0; i < p.Length; i++)
+            {
+
+                Console.WriteLine("Студент № {0}:", i + 1);
+                Console.Write(" Прізвище: ");
+                p[i].prizv = Console.ReadLine();
+                Console.Write("  Курс: "); p[i].kurs = Convert.ToInt32(Console.ReadLine());
+                Console.Write("  Спеціальність (0 - Комп’ютерні науки, 1 - Інформатика, 2 - Математика та економіка, 3 - Фізика та інформатика, 4 - Трудове навчання): ");
+                specialty = Convert.ToInt32(Console.ReadLine());
+                p[i].specialty = (Specialty)specialty;
+                Console.Write("  Оцінка з Фізики: "); p[i].Phisic = Convert.ToInt32(Console.ReadLine());
+                Console.Write("  Оцінка з Математики: "); p[i].Math = Convert.ToInt32(Console.ReadLine());
+            }
+        }
+        static void Print(Student[] p)
+        {
+            Console.WriteLine("=====================================================================================================================");
+            Console.WriteLine("                                        Список студентів");
+            Console.WriteLine("=====================================================================================================================");
+
+            Console.WriteLine("|  № |   Прізвище   | Курс |      Спеціальність      | Оцінка з Фізики | Оцінка з Математики | Оцінка з Інформатики |");
+
+            Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
+            for (int i = 0; i < p.Length; i++)
+            {
+                Console.WriteLine("|{0,3} | {1,-13}|  {2,2}  | {3,-23} |{4,8}         |{5,11}          |{5,11}           |", i + 1, p[i].prizv, p[i].kurs, SpecialtyStr[(int)p[i].specialty], p[i].Phisic, p[i].Math);
+            }
+            Console.WriteLine("=====================================================================================================================");
+
+        }
+        static void Print_Students_Who_Have_5_In_Physics_and_Math(Student[] p)
+        {
+            Console.WriteLine("Прізвища студентів, які отримали з фізики  та математики оцінки “5”: ");
+            for (int i = 0; i < p.Length; i++)
+            {
+                if (p[i].Math == 5 || p[i].Phisic == 5)
+                    Console.WriteLine("{0}.{1}", i + 1, p[i].prizv);
+
+            }
+        }
+        static double MathFive(Student[] p)
+        {
+            double counter1 = 0;
+
+            for (int i = 0; i < p.Length; i++)
+            {
+                if (p[i].Math == 5)
+                    counter1 += 1;
+            }
+
+            return counter1;
+        }
+        static double MathFour(Student[] p)
+        {
+            double counter2 = 0;
+
+            for (int i = 0; i < p.Length; i++)
+            {
+                if (p[i].Math == 4)
+                    counter2 += 1;
+            }
+
+            return counter2;
+        }
+        static double MathThree(Student[] p)
+        {
+            double counter3 = 0;
+
+            for (int i = 0; i < p.Length; i++)
+            {
+                if (p[i].Math == 3)
+                    counter3 += 1;
+            }
+
+            return counter3;
+        }
+
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            int N;
+
+            Console.Write("Введіть кількість студентів = ");
+            N = Convert.ToInt32(Console.ReadLine());
+
+            Student[] p = new Student[N];
+            Create(p);
+            Print(p);
+            Console.WriteLine();
+
+
+            Print_Students_Who_Have_5_In_Physics_and_Math(p);
+            Console.WriteLine($" Кількість оцінок «5 з математики» - {MathFour(p)}");
+            Console.WriteLine($" Кількість оцінок «4 з математики» - {MathFive(p)}");
+            Console.WriteLine($" Кількість оцінок «3 з математики» - {MathThree(p)}");
+
+            Console.ReadKey();
+
+        }
+
+
+    }
+
+}
